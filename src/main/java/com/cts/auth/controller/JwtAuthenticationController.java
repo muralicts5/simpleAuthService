@@ -3,6 +3,7 @@ package com.cts.auth.controller;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -35,18 +36,22 @@ public class JwtAuthenticationController {
 
 	
 	
+	
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-	public ResponseEntity<?> createAuthenticationToken(@RequestParam("username") String username, @RequestParam("password") String password )
+	public ResponseEntity<?> createAuthenticationToken(@RequestParam("username") String username, 
+			@RequestParam("password") String password)
 			throws Exception {
 
 		System.out.println(username);
+		System.out.println("auth");
 		authenticate(username, password);
+		System.out.println("after auth");
 
 		final UserDetails userDetails = jwtInMemoryUserDetailsService
 				.loadUserByUsername(username);
+		System.out.println(userDetails);
 
 		final String token = jwtTokenUtil.generateToken(userDetails);
-
 		return ResponseEntity.ok(new String(token));
 	}
 
