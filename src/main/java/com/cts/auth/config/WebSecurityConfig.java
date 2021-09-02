@@ -20,6 +20,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.session.SessionManagementFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -51,30 +52,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder getPasswordEncoder() {
         return NoOpPasswordEncoder.getInstance();
     }
-
+	
+	
+	
 
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
-		System.out.println("inside the configur2");
 		httpSecurity.csrf().disable()
-					.cors().configurationSource(configurationSource())
-					.and()
 					.authorizeRequests().antMatchers("/authenticate").permitAll()
-					.anyRequest().authenticated()
-					.and().sessionManagement()
-					.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+					.anyRequest().authenticated();
+					//.and().sessionManagement()
+					//.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 	
-	private CorsConfigurationSource configurationSource() {
-	      UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-	      CorsConfiguration config = new CorsConfiguration();
-	      config.addAllowedOrigin("http://lb-frontend-1080588305.ap-south-1.elb.amazonaws.com");
-	      config.setAllowCredentials(true);
-	      config.addAllowedHeader("X-Requested-With");
-	      config.addAllowedHeader("Content-Type");
-	      config.addAllowedMethod(HttpMethod.POST);
-	      source.registerCorsConfiguration("/**", config);
-	      return source;
-	    }
 	
 }

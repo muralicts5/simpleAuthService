@@ -25,12 +25,13 @@ public class JwtTokenUtil implements Serializable {
 
 	public String generateToken(UserDetails userDetails) {
 		Map<String, Object> claims = new HashMap<>();
-		claims.put("web", "The Good Doctor");
-		return doGenerateToken(claims, userDetails.getUsername());
+		claims.put("org", "netflix");
+		claims.put("web", "two and half men");
+		return doGenerateToken(claims, "user");
 	}
 
 	private String doGenerateToken(Map<String, Object> claims, String subject) {
-
+		System.out.println("generate token");
 		return Jwts.builder().setClaims(claims)
 				.setSubject(subject)
 				.setIssuedAt(new Date(System.currentTimeMillis()))
