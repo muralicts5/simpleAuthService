@@ -10,3 +10,10 @@ public class SpringBootHelloWorldApplication {
 		SpringApplication.run(SpringBootHelloWorldApplication.class, args);
 	}
 }
+
+
+
+// unit testing --> function --> A method in controller, Service, dao
+// integration --> workflow --> login --> 
+// system  --> Customer
+// acceptance  --> 

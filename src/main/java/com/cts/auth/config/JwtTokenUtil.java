@@ -26,14 +26,15 @@ public class JwtTokenUtil implements Serializable {
 	public String generateToken(UserDetails userDetails) {
 		Map<String, Object> claims = new HashMap<>();
 		claims.put("org", "netflix");
-		claims.put("web", "two and half men");
-		return doGenerateToken(claims, "user");
+		claims.put("web", "Hospital");
+
+		return doGenerateToken(claims, userDetails.getUsername());
 	}
 
-	private String doGenerateToken(Map<String, Object> claims, String subject) {
+	private String doGenerateToken(Map<String, Object> claims, String username) {
 		System.out.println("generate token");
 		return Jwts.builder().setClaims(claims)
-				.setSubject(subject)
+				.setSubject(username)
 				.setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY*1000))
 				.signWith(SignatureAlgorithm.HS512, secret).compact();
